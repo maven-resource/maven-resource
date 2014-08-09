@@ -1,0 +1,8 @@
+{
+    "name": "${artifactId}",
+    "private": "true",
+    "dependencies": {
+    },
+    "devDependencies": {
+    }
+}

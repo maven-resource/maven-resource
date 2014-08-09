@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+
+    <modelVersion>4.0.0</modelVersion>
+
+    <parent>
+        <groupId>io.github.maven.resource.parent</groupId>
+        <artifactId>basic</artifactId>
+        <version>0.1.0-SNAPSHOT</version>
+        <relativePath>./basic/pom.xml</relativePath>
+    </parent>
+
+    <groupId>io.github.maven.resource.parent</groupId>
+    <artifactId>parent</artifactId>
+    <version>0.1.0-SNAPSHOT</version>
+    <packaging>pom</packaging>
+
+    <url>https://github.com/maven-resource/parent</url>
+
+    <developers>
+        <developer>
+            <id>clawplach</id>
+            <name>Kevin Robertson</name>
+            <roles>
+                <role>build-manager</role>
+                <role>release-manager</role>
+                <role>lead-developer</role>
+                <role>technical-writer</role>
+            </roles>
+        </developer>
+    </developers>
+
+    <distributionManagement>
+        <site>
+            <id>maven-resource.github.io</id>
+            <url>scm:git:ssh://git@github.com:maven-resource/parent.github.io.git</url>
+        </site>
+    </distributionManagement>
+
+    <issueManagement>
+        <system>github</system>
+        <url>https://github.com/maven-resource/parent/issues</url>
+    </issueManagement>
+
+    <inceptionYear>2014</inceptionYear>
+
+    <licenses>
+        <license>
+            <name>The Unlicense</name>
+            <url>http://unlicense.org/</url>
+        </license>
+    </licenses>
+
+    <scm>
+        <connection>scm:git:https://github.com/maven-resource/parent.git</connection>
+        <developerConnection>scm:git:ssh://git@github.com:maven-resource/parent.git</developerConnection>
+        <url>https://github.com/maven-resource/parent</url>
+    </scm>
+
+    <modules>
+        <module>basic</module>
+    </modules>
+
+</project>

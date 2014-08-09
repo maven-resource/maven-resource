@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+
+    <modelVersion>4.0.0</modelVersion>
+
+    <parent>
+        <groupId>io.github.maven.resource.parent</groupId>
+        <artifactId>parent</artifactId>
+        <version>0.1.0-SNAPSHOT</version>
+    </parent>
+
+    <artifactId>jmeter</artifactId>
+    <version>0.1.0-SNAPSHOT</version>
+    <packaging>pom</packaging>
+
+    <name>JMeter</name>
+
+    <profiles>
+        <profile>
+            <id>jmeter</id>
+            <activation>
+                <file>
+                    <exists>src/test/jmeter</exists>
+                </file>
+            </activation>
+            <build>
+                <pluginManagement>
+                    <plugins>
+                        <plugin>
+                            <!-- http://mojo.codehaus.org/chronos/chronos-jmeter-maven-plugin/ -->
+                            <groupId>org.codehaus.mojo</groupId>
+                            <artifactId>chronos-jmeter-maven-plugin</artifactId>
+                            <version>1.1.0</version>
+                            <executions>
+                                <execution>
+                                    <id>perftest</id>
+                                    <goals>
+                                        <goal>jmeter</goal>
+                                    </goals>
+                                    <configuration>
+                                        <dataid>performancetest</dataid>
+                                    </configuration>
+                                </execution>
+                            </executions>
+                            <configuration>
+                                <input>src/test/jmeter</input>
+                            </configuration>
+                        </plugin>
+                    </plugins>
+                </pluginManagement>
+                <plugins>
+                    <plugin>
+                        <groupId>org.codehaus.mojo</groupId>
+                        <artifactId>chronos-jmeter-maven-plugin</artifactId>
+                        <inherited>true</inherited>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+        <profile>
+            <id>jmeter-history</id>
+            <activation>
+                <file>
+                    <exists>src/test/jmeter</exists>
+                </file>
+            </activation>
+            <build>
+                <pluginManagement>
+                    <plugins>
+                        <plugin>
+                            <groupId>org.codehaus.mojo</groupId>
+                            <artifactId>chronos-jmeter-maven-plugin</artifactId>
+                            <executions>
+                                <execution>
+                                    <id>savehistory</id>
+                                    <phase>post-integration-test</phase>
+                                    <goals>
+                                        <goal>savehistory</goal>
+                                    </goals>
+                                    <inherited>true</inherited>
+                                </execution>
+                            </executions>
+                        </plugin>
+                    </plugins>
+                </pluginManagement>
+            </build>
+        </profile>
+        <profile>
+            <id>jmeter-reporting</id>
+            <activation>
+                <file>
+                    <exists>src/test/jmeter</exists>
+                </file>
+            </activation>
+            <reporting>
+                <plugins>
+                    <plugin>
+                        <groupId>org.codehaus.mojo</groupId>
+                        <artifactId>chronos-report-maven-plugin</artifactId>
+                        <inherited>true</inherited>
+                    </plugin>
+                </plugins>
+            </reporting>
+        </profile>
+    </profiles>
+
+</project>

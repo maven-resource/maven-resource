@@ -1,0 +1,91 @@
+# Java artifacts
+*.class
+*.jar
+*.war
+*.ear
+*.rar
+
+# Misc archive artifacts
+*.rar
+*.zip
+*.tar
+*.tar.*
+*.tgz
+*.tlz
+*.tbz2
+*.bz2
+*.gz
+*.lz
+*.lzo
+*.lzma
+*.7z
+*.iso
+
+# Windows artifacts
+*.exe
+*.dll
+*.msi
+*.cab
+Thumbs.db
+
+# C/C++
+*.o
+
+# OS X binary artifacts
+*.dylib
+*.pkg
+*.dmg
+.DS_Store
+
+# Linux binary artifacts
+*.so
+*.a
+*.ar
+
+# Python artifacts
+*.pyc
+
+# Vim artifacts
+*.swp
+*~
+
+# Log artifacts
+*.log
+System.out
+
+# IntelliJ artifacts
+.idea
+*.iml
+*.ipr
+*.ims
+
+# Netbeans artifacts
+nb-configuration.xml
+nbactions.xml
+
+# Eclipse artifacts
+.project
+.settings
+.classpath
+.wtpmodules
+.springBeans
+.myeclipse
+.mymetadata
+.mystrutsdata
+
+# Other
+.pmd
+.checkstyle
+
+# Maven artifacts
+# !!BE CAREFUL WITH THIS EXCLUSION!!
+# This one is meant to exclude the Maven build directory as defined by ${project.build.directory}
+# DON'T ACCIDENTLY EXCLUDE A LEGITIMATE DIRECTORY NAMED 'target' somewhere else in your code base.
+# It is safer to place another .gitignore file containing '/target' in the root of each module.
+# Otherwise, exclude the build directories like this:
+# /target
+# /module1/target
+# /module2/target
+# /module2/submodule/target
+
+/target

@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+
+    <modelVersion>4.0.0</modelVersion>
+
+    <parent>
+        <groupId>io.github.maven.resource.parent</groupId>
+        <artifactId>parent</artifactId>
+        <version>0.1.0-SNAPSHOT</version>
+    </parent>
+
+    <artifactId>css</artifactId>
+    <version>0.1.0-SNAPSHOT</version>
+    <packaging>pom</packaging>
+
+    <name>CSS</name>
+
+    <profiles>
+        <profile>
+            <id>css</id>
+            <activation>
+                <file>
+                    <exists>src/main/css</exists>
+                </file>
+            </activation>
+            <build>
+                <resources>
+                    <resource>
+                        <targetPath>${generatedResources}/css</targetPath>
+                        <filtering>true</filtering>
+                        <directory>src/main/css</directory>
+                    </resource>
+                    <resource>
+                        <targetPath>${public.static.resource.destination}/css</targetPath>
+                        <filtering>false</filtering>
+                        <directory>${generatedResources}/css</directory>
+                    </resource>
+                </resources>
+            </build>
+        </profile>
+    </profiles>
+
+</project>

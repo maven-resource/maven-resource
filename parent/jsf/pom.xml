@@ -1,0 +1,169 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+
+    <modelVersion>4.0.0</modelVersion>
+
+    <parent>
+        <groupId>io.github.maven.resource.parent</groupId>
+        <artifactId>parent</artifactId>
+        <version>0.1.0-SNAPSHOT</version>
+    </parent>
+
+    <artifactId>jsf</artifactId>
+    <version>0.1.0-SNAPSHOT</version>
+    <packaging>pom</packaging>
+
+    <name>JSF</name>
+
+    <profiles>
+
+        <profile>
+            <id>jsf–dependency-management</id>
+            <activation>
+                <property>
+                    <name>jsf</name>
+                    <value>!true</value>
+                </property>
+            </activation>
+            <dependencyManagement>
+                <dependencies>
+                    <dependency>
+                        <groupId>io.github.maven.resource.bom</groupId>
+                        <artifactId>servlet-jsp-jstl-el</artifactId>
+                        <version>0.1.0-SNAPSHOT</version>
+                        <type>pom</type>
+                        <scope>import</scope>
+                    </dependency>
+                </dependencies>
+            </dependencyManagement>
+        </profile>
+
+        <!--
+            Java Server Faces Profile
+            https://javaserverfaces.java.net/
+            https://javaserverfaces-spec-public.java.net/
+        -->
+        <profile>
+            <id>JSF - Java Server Faces</id>
+            <activation>
+                <file>
+                    <exists>src/main/webapp</exists>
+                </file>
+            </activation>
+            <dependencyManagement>
+                <dependencies>
+                    <dependency>
+                        <groupId>javax.faces</groupId>
+                        <artifactId>javax.faces-api</artifactId>
+                        <version>2.2</version>
+                        <scope>provided</scope>
+                    </dependency>
+                </dependencies>
+            </dependencyManagement>
+        </profile>
+
+        <!-- Java Server Faces -->
+        <profile>
+            <id>src/main/jsf</id>
+            <activation>
+                <file>
+                    <exists>src/main/jsf</exists>
+                </file>
+            </activation>
+            <build>
+                <resources>
+                    <resource>
+                        <targetPath>${generatedResources}/jsf</targetPath>
+                        <filtering>false</filtering>
+                        <directory>src/main/jsf</directory>
+                    </resource>
+                </resources>
+                <pluginManagement>
+                    <plugins>
+                        <plugin>
+                            <groupId>com.tunyk.mvn.plugins.htmlcompressor</groupId>
+                            <artifactId>htmlcompressor-maven-plugin</artifactId>
+                            <executions>
+                                <execution>
+                                    <id>compress-jsf-xhtml</id>
+                                    <phase>process-resources</phase>
+                                    <goals>
+                                        <goal>html</goal>
+                                    </goals>
+                                    <inherited>true</inherited>
+                                    <configuration>
+                                        <srcFolder>${generatedResources}/jsf</srcFolder>
+                                        <targetFolder>${project.build.outputDirectory}</targetFolder>
+                                        <fileExt>
+                                            <fileExt>xhtml</fileExt>
+                                        </fileExt>
+                                    </configuration>
+                                </execution>
+                            </executions>
+                            <inherited>true</inherited>
+                        </plugin>
+                        <plugin>
+                            <groupId>org.codehaus.mojo</groupId>
+                            <artifactId>xml-maven-plugin</artifactId>
+                            <executions>
+                                <execution>
+                                    <id>validate-jsf-xhtml</id>
+                                    <phase>process-classes</phase>
+                                    <goals>
+                                        <goal>validate</goal>
+                                    </goals>
+                                    <inherited>true</inherited>
+                                    <configuration>
+                                        <validationSets>
+                                            <validationSet>
+                                                <dir>${template.destination}/jsf</dir>
+                                                <includes>
+                                                    <include>**/*.xhtml</include>
+                                                </includes>
+                                                <validating>!${validation.skip}</validating>
+                                            </validationSet>
+                                        </validationSets>
+                                    </configuration>
+                                </execution>
+                            </executions>
+                            <inherited>true</inherited>
+                        </plugin>
+                    </plugins>
+                </pluginManagement>
+                <plugins>
+                    <plugin>
+                        <groupId>com.tunyk.mvn.plugins.htmlcompressor</groupId>
+                        <artifactId>htmlcompressor-maven-plugin</artifactId>
+                        <inherited>true</inherited>
+                    </plugin>
+                    <plugin>
+                        <groupId>org.codehaus.mojo</groupId>
+                        <artifactId>xml-maven-plugin</artifactId>
+                        <inherited>true</inherited>
+                    </plugin>
+                </plugins>
+            </build>
+            <dependencies>
+                <dependency>
+                    <groupId>javax.servlet</groupId>
+                    <artifactId>javax.servlet-api</artifactId>
+                </dependency>
+                <dependency>
+                    <groupId>javax.servlet.jsp</groupId>
+                    <artifactId>javax.servlet.jsp-api</artifactId>
+                </dependency>
+                <dependency>
+                    <groupId>javax.servlet.jsp.jstl</groupId>
+                    <artifactId>javax.servlet.jsp.jstl-api</artifactId>
+                </dependency>
+                <dependency>
+                    <groupId>javax.el</groupId>
+                    <artifactId>javax.el-api</artifactId>
+                </dependency>
+            </dependencies>
+        </profile>
+
+    </profiles>
+
+</project>

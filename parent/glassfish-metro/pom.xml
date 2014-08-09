@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+
+    <modelVersion>4.0.0</modelVersion>
+
+    <parent>
+        <groupId>io.github.maven.resource.parent</groupId>
+        <artifactId>parent</artifactId>
+        <version>0.1.0-SNAPSHOT</version>
+    </parent>
+
+    <artifactId>glassfish-metro</artifactId>
+    <version>0.1.0-SNAPSHOT</version>
+    <packaging>pom</packaging>
+
+    <name>Glassfish Metro</name>
+
+    <profiles>
+        <!--
+            Detects Glassfish Metro's configuration file.
+        -->
+        <profile>
+            <id>src/main/webapp/WEB-INF/sun-jaxws.xml</id>
+            <activation>
+                <file>
+                    <exists>src/main/webapp/WEB-INF/sun-jaxws.xml</exists>
+                </file>
+            </activation>
+            <build>
+                <pluginManagement>
+                    <plugins>
+                        <plugin>
+                            <groupId>org.apache.maven.plugins</groupId>
+                            <artifactId>maven-war-plugin</artifactId>
+                            <inherited>true</inherited>
+                            <configuration>
+                                <webResources>
+                                    <resource>
+                                        <directory>src/main/webapp</directory>
+                                        <includes>
+                                            <include>WEB-INF/sun-jaxws.xml</include>
+                                        </includes>
+                                        <filtered>true</filtered>
+                                    </resource>
+                                </webResources>
+                            </configuration>
+                        </plugin>
+                        <plugin>
+                            <groupId>org.codehaus.mojo</groupId>
+                            <artifactId>xml-maven-plugin</artifactId>
+                            <executions>
+                                <execution>
+                                    <id>validate-glassfish-metro-config</id>
+                                    <phase>test</phase>
+                                    <goals>
+                                        <goal>validate</goal>
+                                    </goals>
+                                    <inherited>true</inherited>
+                                    <configuration>
+                                        <validationSets>
+                                            <validationSet>
+                                                <dir>${project.build.directory}/${project.build.finalName}/WEB-INF</dir>
+                                                <includes>
+                                                    <include>sun-jaxws.xml</include>
+                                                </includes>
+                                                <validating>!${validation.skip}</validating>
+                                            </validationSet>
+                                        </validationSets>
+                                    </configuration>
+                                </execution>
+                            </executions>
+                            <inherited>true</inherited>
+                        </plugin>
+                    </plugins>
+                </pluginManagement>
+                <plugins>
+                    <plugin>
+                        <groupId>org.codehaus.mojo</groupId>
+                        <artifactId>xml-maven-plugin</artifactId>
+                        <inherited>true</inherited>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+    </profiles>
+
+</project>

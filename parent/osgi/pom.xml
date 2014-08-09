@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+
+    <modelVersion>4.0.0</modelVersion>
+
+    <parent>
+        <groupId>io.github.maven.resource.parent</groupId>
+        <artifactId>parent</artifactId>
+        <version>0.1.0-SNAPSHOT</version>
+    </parent>
+
+    <artifactId>osgi</artifactId>
+    <version>0.1.0-SNAPSHOT</version>
+    <packaging>pom</packaging>
+
+    <name>OSGI</name>
+
+    <profiles>
+        <profile>
+            <id>osgi</id>
+            <activation>
+                <file>
+                    <exists>target/osgi</exists>
+                </file>
+            </activation>
+            <build>
+                <pluginManagement>
+                    <plugins>
+                        <plugin>
+                            <groupId>org.apache.felix</groupId>
+                            <artifactId>maven-bundle-plugin</artifactId>
+                            <version>2.5.0</version>
+                            <executions>
+                                <execution>
+                                    <id>bundle-manifest</id>
+                                    <phase>process-classes</phase>
+                                    <goals>
+                                        <goal>manifest</goal>
+                                    </goals>
+                                </execution>
+                            </executions>
+                            <inherited>true</inherited>
+                            <configuration>
+                                <excludeDependencies>true</excludeDependencies>
+                                <manifestLocation>${project.build.directory}/osgi</manifestLocation>
+                                <instructions>
+                                    <!-- stops the "uses" clauses being added to "Export-Package" manifest entry -->
+                                    <_nouses>true</_nouses>
+                                    <!-- Stop the JAVA_1_n_HOME variables from being treated as headers by Bnd -->
+                                    <_removeheaders>JAVA_1_5_HOME,JAVA_1_6_HOME,JAVA_1_7_HOME,JAVA_1_8_HOME</_removeheaders>
+                                    <Bundle-SymbolicName>${osgi.symbolicName}</Bundle-SymbolicName>
+                                    <Export-Package>${osgi.export}</Export-Package>
+                                    <Private-Package>${osgi.private}</Private-Package>
+                                    <Import-Package>${osgi.import}</Import-Package>
+                                    <DynamicImport-Package>${osgi.dynamicImport}</DynamicImport-Package>
+                                    <Bundle-DocURL>${project.url}</Bundle-DocURL>
+                                </instructions>
+                            </configuration>
+                        </plugin>
+                    </plugins>
+                </pluginManagement>
+                <plugins>
+                    <plugin>
+                        <groupId>org.apache.felix</groupId>
+                        <artifactId>maven-bundle-plugin</artifactId>
+                        <inherited>true</inherited>
+                    </plugin>
+                </plugins>
+            </build>
+            <properties>
+                <osgi.dynamicImport />
+                <osgi.export>${project.groupId}.*;version=${project.version};-noimport:=true</osgi.export>
+                <osgi.import>*</osgi.import>
+                <osgi.private />
+                <osgi.symbolicName>${project.groupId}.${project.artifactId}</osgi.symbolicName>
+            </properties>
+        </profile>
+    </profiles>
+
+</project>

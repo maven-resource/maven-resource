@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+
+    <modelVersion>4.0.0</modelVersion>
+
+    <parent>
+        <groupId>io.github.maven.resource.parent</groupId>
+        <artifactId>parent</artifactId>
+        <version>0.1.0-SNAPSHOT</version>
+    </parent>
+
+    <artifactId>project-config</artifactId>
+    <version>0.1.0-SNAPSHOT</version>
+    <packaging>pom</packaging>
+
+    <name>Config</name>
+
+    <profiles>
+        <profile>
+            <!--
+                Config files that shouldn't be packaged into a jar,
+                but can be modified by the user and placed on the classpath to override the defaults.
+            -->
+            <id>project-config</id>
+            <activation>
+                <file>
+                    <exists>src/main/config</exists>
+                </file>
+            </activation>
+            <build />
+        </profile>
+    </profiles>
+
+</project>

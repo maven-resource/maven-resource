@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+
+    <modelVersion>4.0.0</modelVersion>
+
+    <parent>
+        <groupId>io.github.maven.resource.parent</groupId>
+        <artifactId>parent</artifactId>
+        <version>0.1.0-SNAPSHOT</version>
+    </parent>
+
+    <artifactId>displaytag</artifactId>
+    <version>0.1.0-SNAPSHOT</version>
+    <packaging>pom</packaging>
+
+    <name>Displaytag</name>
+
+    <profiles>
+        <!--
+            Displaytag JSP Tag Library
+            Displaytag isn't maintained anymore. It's still useful, but other alternatives
+            should be considered before integrating it into a project.
+
+            Add it to your project like by creating the file listed in the profile activation.
+
+            TODO: finish this
+            Or, do it easily on the console with a Maven archetype like so:
+
+            $> cd mywebmodule
+            $> ls (MS: dir)
+            $> mvn archetype:generate (and look for the displaytag archetype)
+        -->
+        <profile>
+            <id>displaytag–dependency-management</id>
+            <activation>
+                <property>
+                    <name>!displaytag</name>
+                    <value>!true</value>
+                </property>
+            </activation>
+            <dependencyManagement>
+                <dependencies>
+                    <dependency>
+                        <groupId>io.github.maven.resource.bom</groupId>
+                        <artifactId>jsp-taglib</artifactId>
+                        <version>0.1.0-SNAPSHOT</version>
+                        <type>pom</type>
+                        <scope>import</scope>
+                    </dependency>
+                </dependencies>
+            </dependencyManagement>
+        </profile>
+
+        <profile>
+            <id>displaytag</id>
+            <activation>
+                <file>
+                    <exists>src/main/resources/displaytag.properties</exists>
+                </file>
+            </activation>
+        </profile>
+    </profiles>
+
+</project>

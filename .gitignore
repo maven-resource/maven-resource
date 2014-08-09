@@ -1,0 +1,6 @@
+/target
+/archetype/upstream-wrapper/target
+
+nb-configuration.xml
+.settings
+.project

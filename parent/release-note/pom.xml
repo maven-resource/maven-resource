@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+
+    <modelVersion>4.0.0</modelVersion>
+
+    <parent>
+        <groupId>io.github.maven.resource.parent</groupId>
+        <artifactId>parent</artifactId>
+        <version>0.1.0-SNAPSHOT</version>
+    </parent>
+
+    <artifactId>release-note</artifactId>
+    <version>0.1.0-SNAPSHOT</version>
+    <packaging>pom</packaging>
+
+    <name>Release Note</name>
+
+    <profiles>
+        <!--
+            Generate release notes in top-level directory from src/changes/changes.xml
+            Usage:
+            mvn changes:announcement-generate -Prelease-notes [-Dchanges.version=nnn]
+
+            Defining changes.version allows one to create the RN without first removing the SNAPSHOT suffix.
+
+            Requires file src/changes/release-notes.vm.
+            A sample template is available from:
+            https://svn.apache.org/repos/asf/commons/proper/commons-parent/trunk/src/changes/release-notes.vm
+        -->
+        <profile>
+            <id>release-note</id>
+            <activation>
+                <file>
+                    <exists>src/changes/release-notes.vm</exists>
+                </file>
+            </activation>
+            <build>
+                <pluginManagement>
+                    <plugins>
+                        <plugin>
+                            <artifactId>maven-changes-plugin</artifactId>
+                            <executions>
+                                <execution>
+                                    <id>create-release-notes</id>
+                                    <phase>generate-resources</phase>
+                                    <goals>
+                                        <goal>announcement-generate</goal>
+                                    </goals>
+                                    <inherited>true</inherited>
+                                </execution>
+                            </executions>
+                            <inherited>true</inherited>
+                            <configuration>
+                                <template>release-notes.vm</template>
+                                <templateDirectory>src/changes</templateDirectory>
+                                <runOnlyAtExecutionRoot>true</runOnlyAtExecutionRoot>
+                                <outputDirectory>.</outputDirectory>
+                                <announcementFile>RELEASE-NOTES.txt</announcementFile>
+                                <announceParameters>
+                                    <releaseVersion>${project.version}</releaseVersion>
+                                </announceParameters>
+                            </configuration>
+                        </plugin>
+                    </plugins>
+                </pluginManagement>
+                <plugins>
+                    <plugin>
+                        <artifactId>maven-changes-plugin</artifactId>
+                        <inherited>true</inherited>
+                    </plugin>
+                </plugins>
+            </build>
+            <properties />
+        </profile>
+    </profiles>
+
+</project>

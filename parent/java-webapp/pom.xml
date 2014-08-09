@@ -1,0 +1,141 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+
+    <modelVersion>4.0.0</modelVersion>
+
+    <parent>
+        <groupId>io.github.maven.resource.parent</groupId>
+        <artifactId>parent</artifactId>
+        <version>0.1.0-SNAPSHOT</version>
+    </parent>
+
+    <artifactId>java-webapp</artifactId>
+    <version>0.1.0-SNAPSHOT</version>
+    <packaging>pom</packaging>
+
+    <name>Java WebApp</name>
+
+    <profiles>
+
+        <profile>
+            <id>java-webapp–dependency-management</id>
+            <activation>
+                <property>
+                    <name>!java</name>
+                    <value>!true</value>
+                </property>
+            </activation>
+            <dependencyManagement>
+                <dependencies>
+                    <dependency>
+                        <groupId>io.github.maven.resource.bom</groupId>
+                        <artifactId>java</artifactId>
+                        <version>0.1.0-SNAPSHOT</version>
+                        <type>pom</type>
+                        <scope>import</scope>
+                    </dependency>
+                    <dependency>
+                        <groupId>io.github.maven.resource.bom</groupId>
+                        <artifactId>servlet-jsp-jstl-el</artifactId>
+                        <version>0.1.0-SNAPSHOT</version>
+                        <type>pom</type>
+                        <scope>import</scope>
+                    </dependency>
+                </dependencies>
+            </dependencyManagement>
+        </profile>
+
+        <profile>
+            <id>java-webapp</id>
+            <activation>
+                <file>
+                    <exists>src/main/webapp/WEB-INF</exists>
+                </file>
+            </activation>
+            <build>
+                <pluginManagement>
+                    <plugins>
+                        <!--                        <plugin>
+                            <groupId>org.apache.maven.plugins</groupId>
+                            <artifactId>maven-jar-plugin</artifactId>
+                            <executions>
+                                <execution>
+                                    <id>make-a-jar</id>
+                                    <phase>compile</phase>
+                                    <goals>
+                                        <goal>jar</goal>
+                                    </goals>
+                                    <inherited>true</inherited>
+                                </execution>
+                            </executions>
+                            <inherited>true</inherited>
+                        </plugin>
+                        <plugin>
+                            <groupId>org.apache.maven.plugins</groupId>
+                            <artifactId>maven-install-plugin</artifactId>
+                            <version>2.5.1</version>
+                            <executions>
+                                <execution>
+                                    <phase>install</phase>
+                                    <goals>
+                                        <goal>install-file</goal>
+                                    </goals>
+                                </execution>
+                            </executions>
+                            <inherited>true</inherited>
+                            <configuration>
+                                <file>${project.build.directory}/${project.build.finalName}.jar</file>
+                            </configuration>
+                        </plugin>-->
+                    </plugins>
+                </pluginManagement>
+                <plugins>
+                    <!--                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-war-plugin</artifactId>
+                        <inherited>true</inherited>
+                    </plugin>
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-dependency-plugin</artifactId>
+                        <inherited>true</inherited>
+                    </plugin>
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-jar-plugin</artifactId>
+                        <inherited>true</inherited>
+                    </plugin>
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-install-plugin</artifactId>
+                        <inherited>true</inherited>
+                    </plugin>-->
+                </plugins>
+            </build>
+            <dependencies>
+                <dependency>
+                    <groupId>javax.servlet</groupId>
+                    <artifactId>javax.servlet-api</artifactId>
+                </dependency>
+                <dependency>
+                    <groupId>javax.servlet.jsp</groupId>
+                    <artifactId>javax.servlet.jsp-api</artifactId>
+                </dependency>
+                <dependency>
+                    <groupId>javax.servlet.jsp.jstl</groupId>
+                    <artifactId>javax.servlet.jsp.jstl-api</artifactId>
+                </dependency>
+                <dependency>
+                    <groupId>javax.el</groupId>
+                    <artifactId>javax.el-api</artifactId>
+                </dependency>
+                <dependency>
+                    <groupId>commons-fileupload</groupId>
+                    <artifactId>commons-fileupload</artifactId>
+                </dependency>
+            </dependencies>
+        </profile>
+    </profiles>
+
+</project>

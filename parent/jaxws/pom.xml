@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+
+    <modelVersion>4.0.0</modelVersion>
+
+    <parent>
+        <groupId>io.github.maven.resource.parent</groupId>
+        <artifactId>parent</artifactId>
+        <version>0.1.0-SNAPSHOT</version>
+    </parent>
+
+    <artifactId>jaxws</artifactId>
+    <version>0.1.0-SNAPSHOT</version>
+    <packaging>pom</packaging>
+
+    <name>JAX-WS</name>
+    <profiles>
+        <!--
+            Maven plugin homepage:
+            https://jax-ws-commons.java.net/jaxws-maven-plugin/
+
+            Issue tracker:
+            https://java.net/jira/browse/JAX_WS_COMMONS
+        -->
+        <profile>
+            <id>jaxws</id>
+            <activation>
+                <property>
+                    <name>!jaxws</name>
+                </property>
+            </activation>
+            <build>
+                <pluginManagement>
+                    <plugins>
+                        <plugin>
+                            <groupId>org.jvnet.jax-ws-commons</groupId>
+                            <artifactId>jaxws-maven-plugin</artifactId>
+                            <version>2.3.1-b03</version>
+                            <inherited>true</inherited>
+                            <configuration>
+                                <detail>true</detail>
+                                <inlineSchemas>true</inlineSchemas>
+                                <xnocompile>true</xnocompile>
+                            </configuration>
+                        </plugin>
+                    </plugins>
+                </pluginManagement>
+            </build>
+            <dependencyManagement>
+                <dependencies>
+                    <dependency>
+                        <groupId>io.github.maven.resource.bom</groupId>
+                        <artifactId>jaxws</artifactId>
+                        <version>0.1.0-SNAPSHOT</version>
+                        <type>pom</type>
+                        <scope>import</scope>
+                    </dependency>
+                </dependencies>
+            </dependencyManagement>
+        </profile>
+
+        <profile>
+            <id>jaxws-generate-wsdl</id>
+            <activation>
+                <file>
+                    <exists>target/jaxws/xsd</exists>
+                </file>
+            </activation>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>org.jvnet.jax-ws-commons</groupId>
+                        <artifactId>jaxws-maven-plugin</artifactId>
+                        <executions>
+                            <execution>
+                                <id>jaxws-generate-wsdl</id>
+                                <inherited>true</inherited>
+                                <configuration>
+                                    <genWsdl>true</genWsdl>
+                                    <xnocompile>true</xnocompile>
+                                </configuration>
+                            </execution>
+                        </executions>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+
+    </profiles>
+
+</project>

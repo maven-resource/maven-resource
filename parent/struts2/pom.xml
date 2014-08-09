@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+
+    <modelVersion>4.0.0</modelVersion>
+
+    <parent>
+        <groupId>io.github.maven.resource.parent</groupId>
+        <artifactId>parent</artifactId>
+        <version>0.1.0-SNAPSHOT</version>
+    </parent>
+
+    <artifactId>struts2</artifactId>
+    <version>0.1.0-SNAPSHOT</version>
+    <packaging>pom</packaging>
+
+    <name>Struts2</name>
+
+    <profiles>
+        <profile>
+            <id>struts2–dependency-management</id>
+            <activation>
+                <property>
+                    <name>struts2</name>
+                    <value>!true</value>
+                </property>
+            </activation>
+            <dependencyManagement>
+                <dependencies>
+                    <dependency>
+                        <groupId>io.github.maven.resource.bom</groupId>
+                        <artifactId>apache-struts2</artifactId>
+                        <version>0.1.0-SNAPSHOT</version>
+                        <type>pom</type>
+                    </dependency>
+                </dependencies>
+            </dependencyManagement>
+        </profile>
+
+        <!--
+            Apache Struts 2 Profile
+        -->
+        <profile>
+            <id>apache-struts2</id>
+            <activation>
+                <file>
+                    <exists>src/main/resources/struts.xml</exists>
+                </file>
+            </activation>
+            <build>
+                <resources>
+                    <resource>
+                        <targetPath>${project.build.directory}/${project.build.finalName}</targetPath>
+                        <filtering>true</filtering>
+                        <directory>src/main/struts</directory>
+                        <includes>
+                            <include>WEB-INF/**</include>
+                        </includes>
+                    </resource>
+                </resources>
+            </build>
+            <dependencies>
+                <dependency>
+                    <groupId>org.apache.struts</groupId>
+                    <artifactId>struts2-core</artifactId>
+                </dependency>
+                <dependency>
+                    <groupId>org.apache.struts</groupId>
+                    <artifactId>struts2-spring-plugin</artifactId>
+                </dependency>
+            </dependencies>
+        </profile>
+    </profiles>
+
+</project>

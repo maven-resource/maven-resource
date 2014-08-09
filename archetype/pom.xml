@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+
+    <modelVersion>4.0.0</modelVersion>
+
+    <parent>
+        <groupId>io.github.maven.resource.parent</groupId>
+        <artifactId>basic</artifactId>
+        <version>0.1.0-SNAPSHOT</version>
+        <relativePath>../parent/basic/pom.xml</relativePath>
+    </parent>
+
+    <groupId>io.github.maven.resource.archetype</groupId>
+    <artifactId>archetype</artifactId>
+    <version>0.1.0-SNAPSHOT</version>
+    <packaging>pom</packaging>
+
+    <url>https://github.com/maven-resource/archetype</url>
+
+    <developers>
+        <developer>
+            <id>clawplach</id>
+            <name>Kevin Robertson</name>
+            <roles>
+                <role>build-manager</role>
+                <role>release-manager</role>
+                <role>lead-developer</role>
+                <role>technical-writer</role>
+            </roles>
+        </developer>
+    </developers>
+
+    <distributionManagement>
+        <site>
+            <id>maven-resource.github.io</id>
+            <url>scm:git:ssh://git@github.com:maven-resource/archetype.github.io.git</url>
+        </site>
+    </distributionManagement>
+
+    <issueManagement>
+        <system>github</system>
+        <url>https://github.com/maven-resource/archetype/issues</url>
+    </issueManagement>
+
+    <inceptionYear>2014</inceptionYear>
+
+    <licenses>
+        <license>
+            <name>The Unlicense</name>
+            <url>http://unlicense.org/</url>
+        </license>
+    </licenses>
+
+    <scm>
+        <connection>scm:git:https://github.com/maven-resource/archetype.git</connection>
+        <developerConnection>scm:git:ssh://git@github.com:maven-resource/archetype.git</developerConnection>
+        <url>https://github.com/maven-resource/archetype</url>
+    </scm>
+
+    <build>
+        <defaultGoal>clean install</defaultGoal>
+        <extensions>
+            <extension>
+                <groupId>org.apache.maven.archetype</groupId>
+                <artifactId>archetype-packaging</artifactId>
+                <version>2.2</version>
+            </extension>
+        </extensions>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-archetype-plugin</artifactId>
+                <version>2.2</version>
+                <executions>
+                    <execution>
+                        <configuration>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+        </plugins>
+    </build>
+
+    <modules>
+        <module>vcsignore</module>
+        <module>upstream-wrapper</module>
+    </modules>
+
+</project>

@@ -1,0 +1,172 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+
+    <modelVersion>4.0.0</modelVersion>
+
+    <parent>
+        <groupId>io.github.maven.resource.parent</groupId>
+        <artifactId>parent</artifactId>
+        <version>0.1.0-SNAPSHOT</version>
+    </parent>
+
+    <artifactId>cxf</artifactId>
+    <version>0.1.0-SNAPSHOT</version>
+    <packaging>pom</packaging>
+
+    <name>Apache CXF</name>
+
+    <profiles>
+        <!--
+            http://cxf.apache.org/
+            http://cxf.apache.org/docs/debugging-and-logging.html
+        -->
+        <profile>
+            <id>cxf</id>
+            <build>
+                <pluginManagement>
+                    <plugins>
+                        <!--
+                            http://cxf.apache.org/docs/maven-java2ws-plugin.html
+                            http://cxf.apache.org/docs/java-to-ws.html
+                        -->
+                        <plugin>
+                            <groupId>org.apache.cxf</groupId>
+                            <artifactId>cxf-java2ws-plugin</artifactId>
+                            <version>3.0.1</version>
+                        </plugin>
+                        <!--
+                            Provides a maven wrapper around the JAXB XJC utility.
+                            http://cxf.apache.org/cxf-xjc-plugin.html
+                        -->
+                        <plugin>
+                            <groupId>org.apache.cxf</groupId>
+                            <artifactId>cxf-xjc-plugin</artifactId>
+                            <version>3.0.1</version>
+                        </plugin>
+                        <!--
+                            Initialize fields mapped from elements/attributes with their default values.
+                            http://cxf.apache.org/cxf-xjc-dv.html
+                        -->
+                        <plugin>
+                            <groupId>org.apache.cxf.xjcplugins</groupId>
+                            <artifactId>cxf-xjc-dv</artifactId>
+                            <version>3.0.1</version>
+                        </plugin>
+                        <!--
+                            Implements the toString() method.
+                            http://cxf.apache.org/cxf-xjc-ts.html
+                        -->
+                        <plugin>
+                            <groupId>org.apache.cxf.xjcplugins</groupId>
+                            <artifactId>cxf-xjc-ts</artifactId>
+                            <version>3.0.1</version>
+                        </plugin>
+                        <!--
+                            Generate getters named getXXX() for Booleans instead of isXXX().
+                            http://cxf.apache.org/cxf-xjc-ts.html
+                        -->
+                        <plugin>
+                            <groupId>org.apache.cxf.xjcplugins</groupId>
+                            <artifactId>cxf-xjc-boolean</artifactId>
+                            <version>3.0.1</version>
+                        </plugin>
+                        <!--
+                            Adds extensions methods to allow generated beans to be used as WSDL4J extensors.
+                            http://cxf.apache.org/cxf-xjc-wsdlextension.html
+                        -->
+                        <plugin>
+                            <groupId>org.apache.cxf.xjcplugins</groupId>
+                            <artifactId>cxf-xjc-wsdlextension</artifactId>
+                            <version>3.0.1</version>
+                        </plugin>
+                        <!--
+                            http://cxf.apache.org/docs/maven-cxf-codegen-plugin-wsdl-to-java.html
+                            http://www.jroller.com/gmazza/entry/web_service_tutorial
+                        -->
+                        <plugin>
+                            <groupId>org.apache.cxf</groupId>
+                            <artifactId>cxf-codegen-plugin</artifactId>
+                            <version>3.0.1</version>
+                        </plugin>
+                        <!--
+                            http://cxf.apache.org/docs/jax-rs.html
+                            http://cxf.apache.org/docs/jaxrs-services-description.html#JAXRSServicesDescription-wadl2javaMavenplugin
+                        -->
+                        <plugin>
+                            <groupId>org.apache.cxf</groupId>
+                            <artifactId>cxf-wadl2java-plugin</artifactId>
+                            <version>3.0.1</version>
+                        </plugin>
+                    </plugins>
+                </pluginManagement>
+            </build>
+        </profile>
+        <!--
+            Detects the Apache CXF servlet Spring configuration file.
+        -->
+        <profile>
+            <id>src/main/webapp/WEB-INF/cxf-servlet.xml</id>
+            <activation>
+                <file>
+                    <exists>src/main/webapp/WEB-INF/cxf-servlet.xml</exists>
+                </file>
+            </activation>
+            <build>
+                <pluginManagement>
+                    <plugins>
+                        <plugin>
+                            <groupId>org.apache.maven.plugins</groupId>
+                            <artifactId>maven-war-plugin</artifactId>
+                            <inherited>true</inherited>
+                            <configuration>
+                                <webResources>
+                                    <resource>
+                                        <directory>src/main/webapp</directory>
+                                        <includes>
+                                            <include>WEB-INF/cxf-servlet.xml</include>
+                                        </includes>
+                                    </resource>
+                                </webResources>
+                            </configuration>
+                        </plugin>
+                        <plugin>
+                            <groupId>org.codehaus.mojo</groupId>
+                            <artifactId>xml-maven-plugin</artifactId>
+                            <executions>
+                                <execution>
+                                    <id>validate-apache-cxf-config</id>
+                                    <phase>process-classes</phase>
+                                    <goals>
+                                        <goal>validate</goal>
+                                    </goals>
+                                    <inherited>true</inherited>
+                                    <configuration>
+                                        <validationSets>
+                                            <validationSet>
+                                                <dir>${project.build.directory}/${project.build.finalName}</dir>
+                                                <includes>
+                                                    <include>WEB-INF/cxf-servlet.xml</include>
+                                                </includes>
+                                                <validating>!${validation.skip}</validating>
+                                            </validationSet>
+                                        </validationSets>
+                                    </configuration>
+                                </execution>
+                            </executions>
+                            <inherited>true</inherited>
+                        </plugin>
+                    </plugins>
+                </pluginManagement>
+                <plugins>
+                    <plugin>
+                        <groupId>org.codehaus.mojo</groupId>
+                        <artifactId>xml-maven-plugin</artifactId>
+                        <inherited>true</inherited>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+    </profiles>
+
+</project>

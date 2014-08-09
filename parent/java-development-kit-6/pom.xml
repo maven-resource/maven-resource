@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+
+    <modelVersion>4.0.0</modelVersion>
+
+    <parent>
+        <groupId>io.github.maven.resource.parent</groupId>
+        <artifactId>parent</artifactId>
+        <version>0.1.0-SNAPSHOT</version>
+    </parent>
+
+    <artifactId>java-development-kit-6</artifactId>
+    <version>0.1.0-SNAPSHOT</version>
+    <packaging>pom</packaging>
+
+    <name>Java Development Kit 6</name>
+
+    <profiles>
+        <!--
+            Profile for running the build using JDK 1.6
+            (JAVA_1_6_HOME needs to be defined, e.g. in settings.xml or an environment variable)
+        -->
+        <profile>
+            <id>java-development-kit-6</id>
+            <build>
+                <pluginManagement>
+                    <plugins>
+                        <plugin>
+                            <groupId>org.apache.maven.plugins</groupId>
+                            <artifactId>maven-toolchains-plugin</artifactId>
+                            <inherited>true</inherited>
+                            <configuration>
+                                <toolchains>
+                                    <jdk>
+                                        <version>[${jdk.version},)</version>
+                                    </jdk>
+                                </toolchains>
+                            </configuration>
+                        </plugin>
+                    </plugins>
+                </pluginManagement>
+            </build>
+            <properties>
+                <jdk.version>1.6</jdk.version>
+                <maven.compiler.source>${jdk.version}</maven.compiler.source>
+                <maven.compiler.target>${jdk.version}</maven.compiler.target>
+            </properties>
+        </profile>
+    </profiles>
+
+</project>

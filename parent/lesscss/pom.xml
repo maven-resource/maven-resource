@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+
+    <modelVersion>4.0.0</modelVersion>
+
+    <parent>
+        <groupId>io.github.maven.resource.parent</groupId>
+        <artifactId>parent</artifactId>
+        <version>0.1.0-SNAPSHOT</version>
+    </parent>
+
+    <artifactId>lesscss</artifactId>
+    <version>0.1.0-SNAPSHOT</version>
+    <packaging>pom</packaging>
+
+    <name>Less.css</name>
+
+    <profiles>
+        <profile>
+            <id>lesscss</id>
+            <activation>
+                <file>
+                    <exists>src/main/less</exists>
+                </file>
+            </activation>
+            <build>
+                <resources>
+                    <resource>
+                        <targetPath>${generatedResources}/less</targetPath>
+                        <filtering>true</filtering>
+                        <directory>src/main/less</directory>
+                    </resource>
+                    <resource>
+                        <targetPath>${public.static.resource.destination}/less</targetPath>
+                        <directory>${generatedResources}/less</directory>
+                    </resource>
+                    <resource>
+                        <targetPath>${public.static.resource.destination}/css</targetPath>
+                        <filtering>false</filtering>
+                        <directory>${generatedResources}/css</directory>
+                    </resource>
+                </resources>
+                <pluginManagement>
+                    <plugins>
+                        <plugin>
+                            <groupId>org.lesscss</groupId>
+                            <artifactId>lesscss-maven-plugin</artifactId>
+                            <version>1.7.0.1.1</version>
+                            <executions>
+                                <execution>
+                                    <id>generate-css-resources</id>
+                                    <phase>compile</phase>
+                                    <goals>
+                                        <goal>compile</goal>
+                                    </goals>
+                                    <inherited>true</inherited>
+                                </execution>
+                            </executions>
+                            <inherited>true</inherited>
+                            <configuration>
+                                <force>true</force>
+                                <sourceDirectory>${generatedResources}/less</sourceDirectory>
+                                <outputDirectory>${generatedResources}/css</outputDirectory>
+                            </configuration>
+                        </plugin>
+                    </plugins>
+                </pluginManagement>
+                <plugins>
+                    <plugin>
+                        <groupId>org.lesscss</groupId>
+                        <artifactId>lesscss-maven-plugin</artifactId>
+                        <inherited>true</inherited>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+    </profiles>
+
+</project>

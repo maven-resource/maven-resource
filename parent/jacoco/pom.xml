@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+
+    <modelVersion>4.0.0</modelVersion>
+
+    <parent>
+        <groupId>io.github.maven.resource.parent</groupId>
+        <artifactId>parent</artifactId>
+        <version>0.1.0-SNAPSHOT</version>
+    </parent>
+
+    <artifactId>jacoco</artifactId>
+    <version>0.1.0-SNAPSHOT</version>
+    <packaging>pom</packaging>
+
+    <name>Jacoco</name>
+
+    <profiles>
+        <profile>
+            <id>jacoco</id>
+            <activation>
+                <file>
+                    <exists>src/site/resources/profile.jacoco</exists>
+                </file>
+            </activation>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>org.jacoco</groupId>
+                        <artifactId>jacoco-maven-plugin</artifactId>
+                        <!-- Note that since JaCoCo relies on an agent to perform tests,
+                        it changes the surefire arguments line. If a component also
+                        needs to change the argument line of maven-surefire-plugin,
+                        then it must add ${argLine} property (which is set by JaCoCo)
+                        in the argLine configuration element of maven-surefire-plugin
+                        to preserve JaCoCo settings. -->
+                        <executions>
+                            <execution>
+                                <id>prepare-agent</id>
+                                <phase>process-test-classes</phase>
+                                <goals>
+                                    <goal>prepare-agent</goal>
+                                </goals>
+                            </execution>
+                            <execution>
+                                <id>report</id>
+                                <phase>site</phase>
+                                <goals>
+                                    <goal>report</goal>
+                                </goals>
+                            </execution>
+                            <execution>
+                                <id>check</id>
+                                <goals>
+                                    <goal>check</goal>
+                                </goals>
+                                <configuration>
+                                    <check>
+                                        <classRatio>${jacoco.classRatio}</classRatio>
+                                        <instructionRatio>${jacoco.instructionRatio}</instructionRatio>
+                                        <methodRatio>${jacoco.methodRatio}</methodRatio>
+                                        <branchRatio>${jacoco.branchRatio}</branchRatio>
+                                        <complexityRatio>${jacoco.complexityRatio}</complexityRatio>
+                                        <lineRatio>${jacoco.lineRatio}</lineRatio>
+                                    </check>
+                                    <haltOnFailure>${jacoco.haltOnFailure}</haltOnFailure>
+                                </configuration>
+                            </execution>
+                        </executions>
+                        <inherited>true</inherited>
+                    </plugin>
+                </plugins>
+            </build>
+            <properties>
+                <jacoco.branchRatio>85</jacoco.branchRatio>
+                <jacoco.classRatio>100</jacoco.classRatio>
+                <jacoco.complexityRatio>85</jacoco.complexityRatio>
+                <jacoco.haltOnFailure>false</jacoco.haltOnFailure>
+                <jacoco.instructionRatio>90</jacoco.instructionRatio>
+                <jacoco.lineRatio>90</jacoco.lineRatio>
+                <jacoco.methodRatio>95</jacoco.methodRatio>
+            </properties>
+            <reporting>
+                <plugins>
+                    <plugin>
+                        <groupId>org.jacoco</groupId>
+                        <artifactId>jacoco-maven-plugin</artifactId>
+                        <inherited>true</inherited>
+                    </plugin>
+                </plugins>
+            </reporting>
+        </profile>
+    </profiles>
+
+</project>

@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+
+    <modelVersion>4.0.0</modelVersion>
+
+    <parent>
+        <groupId>io.github.maven.resource.parent</groupId>
+        <artifactId>parent</artifactId>
+        <version>0.1.0-SNAPSHOT</version>
+    </parent>
+
+    <artifactId>jaxb</artifactId>
+    <version>0.1.0-SNAPSHOT</version>
+    <packaging>pom</packaging>
+
+    <name>JAXB</name>
+
+    <build>
+        <pluginManagement>
+            <plugins>
+                <!-- http://mojo.codehaus.org/jaxb2-maven-plugin/ -->
+                <plugin>
+                    <groupId>org.codehaus.mojo</groupId>
+                    <artifactId>jaxb2-maven-plugin</artifactId>
+                    <version>1.6</version>
+                    <inherited>true</inherited>
+                    <configuration>
+                        <generatedResourcesDirectory>${generatedResources}</generatedResourcesDirectory>
+                        <readOnly>true</readOnly>
+                        <catalog>${project.build.outputDirectory}/catalog.xml</catalog>
+                    </configuration>
+                </plugin>
+                <!--
+                    https://java.net/projects/maven-jaxb2-plugin/pages/Home
+                    http://static.highsource.org/mjiip/maven-jaxb2-plugin/generate-mojo.html
+                -->
+                <plugin>
+                    <groupId>org.jvnet.jaxb2.maven2</groupId>
+                    <artifactId>maven-jaxb2-plugin</artifactId>
+                    <version>0.9.0</version>
+                </plugin>
+            </plugins>
+        </pluginManagement>
+    </build>
+
+    <profiles>
+        <profile>
+            <id>src/main/xjb</id>
+            <activation>
+                <file>
+                    <exists>src/main/xjb</exists>
+                </file>
+            </activation>
+            <build>
+                <resources>
+                    <resource>
+                        <targetPath>${generatedResources}/xjb</targetPath>
+                        <filtering>true</filtering>
+                        <directory>src/main/xjb</directory>
+                    </resource>
+                </resources>
+                <pluginManagement>
+                    <plugins>
+                        <plugin>
+                            <groupId>org.jvnet.jaxb2.maven2</groupId>
+                            <artifactId>maven-jaxb2-plugin</artifactId>
+                            <inherited>true</inherited>
+                            <configuration>
+                                <readOnly>true</readOnly>
+                                <markGenerated>true</markGenerated>
+                                <catalogs>
+                                    <catalog>${project.build.outputDirectory}/catalog.xml</catalog>
+                                </catalogs>
+                            </configuration>
+                        </plugin>
+                    </plugins>
+                </pluginManagement>
+            </build>
+            <dependencies />
+        </profile>
+        <profile>
+            <id>src/main/jaxb</id>
+            <activation>
+                <file>
+                    <exists>src/main/jaxb</exists>
+                </file>
+            </activation>
+        </profile>
+    </profiles>
+
+</project>

@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+
+    <modelVersion>4.0.0</modelVersion>
+
+    <parent>
+        <groupId>io.github.maven.resource.parent</groupId>
+        <artifactId>parent</artifactId>
+        <version>0.1.0-SNAPSHOT</version>
+    </parent>
+
+    <artifactId>javascript</artifactId>
+    <version>0.1.0-SNAPSHOT</version>
+    <packaging>pom</packaging>
+
+    <name>JavaScript</name>
+
+    <profiles>
+        <profile>
+            <id>javascript</id>
+            <activation>
+                <file>
+                    <exists>src/main/js</exists>
+                </file>
+            </activation>
+            <build>
+                <resources>
+                    <resource>
+                        <targetPath>${generatedResources}/js</targetPath>
+                        <filtering>true</filtering>
+                        <directory>src/main/js</directory>
+                    </resource>
+                    <resource>
+                        <targetPath>${public.static.resource.destination}/js</targetPath>
+                        <filtering>false</filtering>
+                        <directory>${generatedResources}/js</directory>
+                    </resource>
+                </resources>
+                <pluginManagement>
+                    <plugins>
+                        <plugin>
+                            <groupId>org.codehaus.mojo</groupId>
+                            <artifactId>jslint-maven-plugin</artifactId>
+                            <version>1.0.1</version>
+                            <executions>
+                                <execution>
+                                    <id>lint-javascript</id>
+                                    <goals>
+                                        <goal>jslint</goal>
+                                    </goals>
+                                    <inherited>true</inherited>
+                                </execution>
+                            </executions>
+                            <inherited>true</inherited>
+                            <configuration>
+                                <allowOneVarStatementPerFunction>true</allowOneVarStatementPerFunction>
+                                <assumeABrowser>true</assumeABrowser>
+                                <predefinedVars>define</predefinedVars>
+                                <disallowDanglingUnderbarInIdentifiers>true</disallowDanglingUnderbarInIdentifiers>
+                                <disallowBitwiseOperators>true</disallowBitwiseOperators>
+                                <disallowIncrAndDecr>true</disallowIncrAndDecr>
+                                <disallowInsecureCharsInRegExp>true</disallowInsecureCharsInRegExp>
+                                <disallowUndefinedVariables>true</disallowUndefinedVariables>
+                                <maximumLengthOfLine>120</maximumLengthOfLine>
+                                <requireInitialCapsForConstructors>true</requireInitialCapsForConstructors>
+                                <requireUseStrict>true</requireUseStrict>
+                                <safeSubset>true</safeSubset>
+                                <strictWhiteSpace>true</strictWhiteSpace>
+                                <strictWhiteSpaceIndentation>4</strictWhiteSpaceIndentation>
+                                <tolerateUnfilteredForIn>true</tolerateUnfilteredForIn>
+                            </configuration>
+                        </plugin>
+                    </plugins>
+                </pluginManagement>
+            </build>
+        </profile>
+    </profiles>
+
+</project>

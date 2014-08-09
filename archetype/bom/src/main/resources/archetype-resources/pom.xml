@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+
+    <modelVersion>4.0.0</modelVersion>
+
+    <groupId>${groupId}</groupId>
+    <artifactId>${artifactId}</artifactId>
+    <version>${version}</version>
+    <packaging>pom</packaging>
+
+    <name>${artifactId} – Bill of Material</name>
+    <description>This BOM can be imported into ‘dependencyManagement’ sections
+        of other poms. Keeping the long list of dependency declarations in a
+        separate file like this one will help keep your POM from being cluttered.
+    </description>
+
+    <dependencyManagement>
+        <dependencies>
+            <!-- Add dependencies here -->
+        </dependencies>
+    </dependencyManagement>
+
+</project>

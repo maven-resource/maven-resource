@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+
+    <modelVersion>4.0.0</modelVersion>
+
+    <parent>
+        <groupId>io.github.maven.resource.parent</groupId>
+        <artifactId>parent</artifactId>
+        <version>0.1.0-SNAPSHOT</version>
+    </parent>
+
+    <artifactId>jsp</artifactId>
+    <version>0.1.0-SNAPSHOT</version>
+    <packaging>pom</packaging>
+
+    <name>JSP</name>
+
+    <profiles>
+
+        <profile>
+            <id>jsp–dependency-management</id>
+            <activation>
+                <property>
+                    <name>jsp</name>
+                    <value>!true</value>
+                </property>
+            </activation>
+            <dependencyManagement>
+                <dependencies>
+                    <dependency>
+                        <groupId>io.github.maven.resource.bom</groupId>
+                        <artifactId>servlet-jsp-jstl-el</artifactId>
+                        <version>0.1.0-SNAPSHOT</version>
+                        <type>pom</type>
+                        <scope>import</scope>
+                    </dependency>
+                </dependencies>
+            </dependencyManagement>
+        </profile>
+
+        <profile>
+            <id>src/main/jsp</id>
+            <activation>
+                <file>
+                    <exists>src/main/jsp</exists>
+                </file>
+            </activation>
+            <build>
+                <resources>
+                    <resource>
+                        <targetPath>${generatedResources}/jsp</targetPath>
+                        <filtering>false</filtering>
+                        <directory>src/main/jsp</directory>
+                    </resource>
+                </resources>
+                <pluginManagement>
+                    <plugins>
+                        <plugin>
+                            <groupId>com.tunyk.mvn.plugins.htmlcompressor</groupId>
+                            <artifactId>htmlcompressor-maven-plugin</artifactId>
+                            <executions>
+                                <execution>
+                                    <id>process-jsp</id>
+                                    <phase>process-resources</phase>
+                                    <goals>
+                                        <goal>html</goal>
+                                    </goals>
+                                    <inherited>true</inherited>
+                                    <configuration>
+                                        <srcFolder>${generatedResources}/jsp</srcFolder>
+                                        <targetFolder>${template.destination}/jsp</targetFolder>
+                                        <fileExt>
+                                            <fileExt>jsp</fileExt>
+                                        </fileExt>
+                                    </configuration>
+                                </execution>
+                                <execution>
+                                    <id>process-jsp-tags</id>
+                                    <phase>process-resources</phase>
+                                    <goals>
+                                        <goal>html</goal>
+                                    </goals>
+                                    <inherited>true</inherited>
+                                    <configuration>
+                                        <srcFolder>${generatedResources}/jsp/tags</srcFolder>
+                                        <targetFolder>${template.destination}/tags</targetFolder>
+                                        <fileExt>
+                                            <fileExt>tag</fileExt>
+                                        </fileExt>
+                                    </configuration>
+                                </execution>
+                            </executions>
+                            <inherited>true</inherited>
+                        </plugin>
+                    </plugins>
+                </pluginManagement>
+                <plugins>
+                    <plugin>
+                        <groupId>com.tunyk.mvn.plugins.htmlcompressor</groupId>
+                        <artifactId>htmlcompressor-maven-plugin</artifactId>
+                        <inherited>true</inherited>
+                    </plugin>
+                </plugins>
+            </build>
+            <dependencies>
+                <dependency>
+                    <groupId>javax.servlet</groupId>
+                    <artifactId>javax.servlet-api</artifactId>
+                </dependency>
+                <dependency>
+                    <groupId>javax.servlet.jsp</groupId>
+                    <artifactId>javax.servlet.jsp-api</artifactId>
+                </dependency>
+                <dependency>
+                    <groupId>javax.servlet.jsp.jstl</groupId>
+                    <artifactId>javax.servlet.jsp.jstl-api</artifactId>
+                </dependency>
+                <dependency>
+                    <groupId>javax.el</groupId>
+                    <artifactId>javax.el-api</artifactId>
+                </dependency>
+            </dependencies>
+        </profile>
+    </profiles>
+
+</project>

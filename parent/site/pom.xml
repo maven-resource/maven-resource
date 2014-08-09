@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+
+    <modelVersion>4.0.0</modelVersion>
+
+    <parent>
+        <groupId>io.github.maven.resource.parent</groupId>
+        <artifactId>parent</artifactId>
+        <version>0.1.0-SNAPSHOT</version>
+    </parent>
+
+    <artifactId>site</artifactId>
+    <version>0.1.0-SNAPSHOT</version>
+    <packaging>pom</packaging>
+
+    <name>Site</name>
+
+    <url>https://example.com/wiki/display/${project.identifier}</url>
+
+    <profiles>
+        <!--
+            Project Site
+            http://maven.apache.org/plugins/maven-site-plugin/examples/sitedescriptor.html
+        -->
+        <profile>
+            <id>site</id>
+            <activation>
+                <file>
+                    <exists>src/site</exists>
+                </file>
+            </activation>
+            <build>
+                <pluginManagement>
+                    <plugins>
+                        <plugin>
+                            <groupId>org.apache.maven.plugins</groupId>
+                            <artifactId>maven-site-plugin</artifactId>
+                            <version>3.3</version>
+                            <executions>
+                                <execution>
+                                    <id>attach-site-descriptor</id>
+                                    <phase>package</phase>
+                                    <goals>
+                                        <goal>attach-descriptor</goal>
+                                    </goals>
+                                </execution>
+                            </executions>
+                            <inherited>true</inherited>
+                            <configuration>
+                                <generateProjectInfo>true</generateProjectInfo>
+                                <validate>true</validate>
+                                <generateSitemap>true</generateSitemap>
+                                <locales>en</locales>
+                                <skipDeploy>true</skipDeploy>
+                            </configuration>
+                        </plugin>
+                    </plugins>
+                </pluginManagement>
+                <plugins>
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-site-plugin</artifactId>
+                        <inherited>true</inherited>
+                    </plugin>
+                </plugins>
+            </build>
+            <properties>
+                <project.site.url />
+            </properties>
+        </profile>
+    </profiles>
+
+</project>

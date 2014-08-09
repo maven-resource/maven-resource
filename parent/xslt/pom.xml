@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+
+    <modelVersion>4.0.0</modelVersion>
+
+    <parent>
+        <groupId>io.github.maven.resource.parent</groupId>
+        <artifactId>parent</artifactId>
+        <version>0.1.0-SNAPSHOT</version>
+    </parent>
+
+    <artifactId>xslt</artifactId>
+    <version>0.1.0-SNAPSHOT</version>
+    <packaging>pom</packaging>
+
+    <name>XSLT</name>
+
+    <profiles>
+        <profile>
+            <id>xml-xslt</id>
+            <activation>
+                <file>
+                    <exists>src/main/xslt</exists>
+                </file>
+            </activation>
+            <build>
+                <resources>
+                    <resource>
+                        <targetPath>${generatedResources}/xslt</targetPath>
+                        <filtering>true</filtering>
+                        <directory>src/main/xslt</directory>
+                    </resource>
+                </resources>
+                <pluginManagement>
+                    <plugins>
+                        <plugin>
+                            <groupId>com.tunyk.mvn.plugins.htmlcompressor</groupId>
+                            <artifactId>htmlcompressor-maven-plugin</artifactId>
+                            <executions>
+                                <execution>
+                                    <id>compress-xslt</id>
+                                    <phase>process-resources</phase>
+                                    <goals>
+                                        <goal>xml</goal>
+                                    </goals>
+                                    <inherited>true</inherited>
+                                    <configuration>
+                                        <srcFolder>${generatedResources}/xslt</srcFolder>
+                                        <targetFolder>${public.static.resource.destination}/xslt</targetFolder>
+                                        <fileExt>
+                                            <fileExt>xslt</fileExt>
+                                        </fileExt>
+                                    </configuration>
+                                </execution>
+                            </executions>
+                            <inherited>true</inherited>
+                        </plugin>
+                        <plugin>
+                            <groupId>org.codehaus.mojo</groupId>
+                            <artifactId>xml-maven-plugin</artifactId>
+                            <executions>
+                                <execution>
+                                    <id>validate-xslt</id>
+                                    <phase>process-classes</phase>
+                                    <goals>
+                                        <goal>validate</goal>
+                                    </goals>
+                                    <inherited>true</inherited>
+                                    <configuration>
+                                        <validationSets>
+                                            <validationSet>
+                                                <dir>${public.static.resource.destination}/xslt</dir>
+                                                <includes>
+                                                    <include>**/*.xslt</include>
+                                                </includes>
+                                                <validating>!${validation.skip}</validating>
+                                            </validationSet>
+                                        </validationSets>
+                                    </configuration>
+                                </execution>
+                            </executions>
+                            <inherited>true</inherited>
+                        </plugin>
+                    </plugins>
+                </pluginManagement>
+                <plugins>
+                    <plugin>
+                        <groupId>com.tunyk.mvn.plugins.htmlcompressor</groupId>
+                        <artifactId>htmlcompressor-maven-plugin</artifactId>
+                        <inherited>true</inherited>
+                    </plugin>
+                    <plugin>
+                        <groupId>org.codehaus.mojo</groupId>
+                        <artifactId>xml-maven-plugin</artifactId>
+                        <inherited>true</inherited>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+    </profiles>
+
+</project>

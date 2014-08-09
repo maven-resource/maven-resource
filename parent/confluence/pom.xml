@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+
+    <modelVersion>4.0.0</modelVersion>
+
+    <parent>
+        <groupId>io.github.maven.resource.parent</groupId>
+        <artifactId>parent</artifactId>
+        <version>0.1.0-SNAPSHOT</version>
+    </parent>
+
+    <artifactId>confluence</artifactId>
+    <version>0.1.0-SNAPSHOT</version>
+    <packaging>pom</packaging>
+
+    <name>Confluence</name>
+
+    <profiles>
+        <!--
+            Project Site Confluence
+            http://docs.codehaus.org/display/MVNCONFSITE/Home
+        -->
+        <profile>
+            <id>confluence</id>
+            <activation>
+                <file>
+                    <exists>src/site/confluence</exists>
+                </file>
+            </activation>
+            <properties>
+                <confluence.home>${project.site.url}</confluence.home>
+                <confluence.spaceKey>${project.identifier}</confluence.spaceKey>
+            </properties>
+            <reporting>
+                <plugins>
+                    <plugin>
+                        <groupId>org.bsc.maven</groupId>
+                        <artifactId>maven-confluence-reporting-plugin</artifactId>
+                        <version>3.4.2</version>
+                        <reportSets>
+                            <reportSet>
+                                <id>confluence</id>
+                                <reports>
+                                    <report>confluence-summary</report>
+                                </reports>
+                                <inherited>true</inherited>
+                                <configuration>
+                                    <endPoint>${confluence.home}/rpc/xmlrpc</endPoint>
+                                    <spaceKey>${confluence.spaceKey}</spaceKey>
+                                    <parentPageTitle>${confluence.parentPageTitle}</parentPageTitle>
+                                    <title>${project.build.finalName}</title>
+                                    <labels>
+                                        <label>${project.build.finalName}</label>
+                                        <label>project-report</label>
+                                    </labels>
+                                    <templateWiki>src/site/confluence/template.wiki</templateWiki>
+                                    <wikiFilesExt>.wiki</wikiFilesExt>
+                                    <serverId>${project.site.id}</serverId>
+                                    <attachmentFolder>src/site/confluence/attachments</attachmentFolder>
+                                    <childrenFolder>src/site/confluence/children</childrenFolder>
+                                    <removeSnapshots>true</removeSnapshots>
+                                    <siteDescriptor>src/site/confluence/site.xml</siteDescriptor>
+                                </configuration>
+                            </reportSet>
+                        </reportSets>
+                        <inherited>true</inherited>
+                    </plugin>
+                </plugins>
+            </reporting>
+        </profile>
+    </profiles>
+
+</project>

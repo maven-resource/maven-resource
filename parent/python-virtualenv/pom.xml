@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+
+    <modelVersion>4.0.0</modelVersion>
+
+    <parent>
+        <groupId>io.github.maven.resource.parent</groupId>
+        <artifactId>parent</artifactId>
+        <version>0.1.0-SNAPSHOT</version>
+    </parent>
+
+    <artifactId>python-virtualenv</artifactId>
+    <version>0.1.0-SNAPSHOT</version>
+    <packaging>pom</packaging>
+
+    <name>Python Virtualenv</name>
+
+    <profiles>
+        <profile>
+            <id>python-test-virtualenv</id>
+            <activation>
+                <file>
+                    <exists>python-test-requirements.pip</exists>
+                </file>
+            </activation>
+            <build>
+                <pluginManagement>
+                    <plugins>
+                        <plugin>
+                            <groupId>org.codehaus.mojo</groupId>
+                            <artifactId>exec-maven-plugin</artifactId>
+                            <executions>
+                                <execution>
+                                    <id>setup-python-virtualenv</id>
+                                    <phase>pre-integration-test</phase>
+                                    <goals>
+                                        <goal>exec</goal>
+                                    </goals>
+                                    <inherited>true</inherited>
+                                    <configuration>
+                                        <executable>virtualenv</executable>
+                                        <arguments>
+                                            <argument>--no-site-packages</argument>
+                                            <argument>${virtualenv.workingDirectory}</argument>
+                                        </arguments>
+                                    </configuration>
+                                </execution>
+                                <execution>
+                                    <id>install-python-dependencies</id>
+                                    <phase>pre-integration-test</phase>
+                                    <goals>
+                                        <goal>exec</goal>
+                                    </goals>
+                                    <inherited>true</inherited>
+                                    <configuration>
+                                        <executable>${python.executable}</executable>
+                                        <workingDirectory>${basedir}</workingDirectory>
+                                        <arguments>
+                                            <argument>-m</argument>
+                                            <argument>pip</argument>
+                                            <argument>install</argument>
+                                            <argument>-r</argument>
+                                            <argument>python-test-requirements.pip</argument>
+                                        </arguments>
+                                    </configuration>
+                                </execution>
+                            </executions>
+                            <inherited>true</inherited>
+                        </plugin>
+                    </plugins>
+                </pluginManagement>
+                <plugins>
+                    <plugin>
+                        <groupId>org.codehaus.mojo</groupId>
+                        <artifactId>exec-maven-plugin</artifactId>
+                        <inherited>true</inherited>
+                    </plugin>
+                </plugins>
+            </build>
+            <properties>
+                <python.executable>${virtualenv.binDirectory}/python</python.executable>
+                <virtualenv.binDirectory>${virtualenv.workingDirectory}/bin</virtualenv.binDirectory>
+                <virtualenv.workingDirectory>${project.build.directory}/virtualenv</virtualenv.workingDirectory>
+            </properties>
+        </profile>
+
+        <profile>
+            <id>windows-python-test-virtualenv</id>
+            <activation>
+                <os>
+                    <family>Windows</family>
+                </os>
+            </activation>
+            <properties>
+                <env.TEMP />
+                <virtualenv.binDirectory>${virtualenv.workingDirectory}/Scripts</virtualenv.binDirectory>
+                <!--
+                    Install to the user's temporary directory to workaround a Python bug on Windows.
+                    http://bugs.python.org/issue18199
+                -->
+                <virtualenv.workingDirectory>${env.TEMP}/${project.build.finalName}/virtualenv</virtualenv.workingDirectory>
+            </properties>
+        </profile>
+    </profiles>
+
+</project>
