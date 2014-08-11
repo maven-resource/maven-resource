@@ -60,6 +60,25 @@
     </scm>
 
     <modules>
+        <module>apache-commons</module>
+        <module>apache-cxf</module>
+        <module>apache-struts2</module>
+        <module>apache-tomcat8</module>
+        <module>apache-wicket</module>
+        <module>jasperreports</module>
+        <module>java</module>
+        <module>java-logging</module>
+        <module>jaxb</module>
+        <module>jaxws</module>
+        <module>jdbc-driver</module>
+        <module>jsf</module>
+        <module>jsp-taglib</module>
+        <module>lombok</module>
+        <module>servlet-jsp-jstl-el</module>
+        <module>spring-framework</module>
+        <module>terracotta-quartz</module>
+        <module>webjar</module>
+        <module>wro4j</module>
     </modules>
 
 </project>

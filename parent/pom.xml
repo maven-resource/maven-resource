@@ -60,7 +60,81 @@
     </scm>
 
     <modules>
+        <module>all</module>
+        <module>apt</module>
+        <module>archetype</module>
+        <module>arquillian</module>
         <module>basic</module>
+        <module>c3p0</module>
+        <module>cargo</module>
+        <module>checkstyle</module>
+        <module>clirr</module>
+        <module>cobertura</module>
+        <module>compile</module>
+        <module>confluence</module>
+        <module>css</module>
+        <module>cxf</module>
+        <module>database</module>
+        <module>displaytag</module>
+        <module>eclipse</module>
+        <module>enforcer</module>
+        <module>findbugs</module>
+        <module>glassfish</module>
+        <module>glassfish-metro</module>
+        <module>html</module>
+        <module>htmlcompressor</module>
+        <module>jacoco</module>
+        <module>java</module>
+        <module>java-development-kit-5</module>
+        <module>java-development-kit-6</module>
+        <module>java-development-kit-7</module>
+        <module>java-development-kit-8</module>
+        <module>java-webapp</module>
+        <module>java-webapp-fragment</module>
+        <module>javadoc</module>
+        <module>javascript</module>
+        <module>jaxb</module>
+        <module>jaxws</module>
+        <module>keytool</module>
+        <module>l10n</module>
+        <module>lesscss</module>
+        <module>lombok</module>
+        <module>maven-site-doxia-fml</module>
+        <module>maven-site-doxia-xdoc</module>
+        <module>minimal</module>
+        <module>modello</module>
+        <module>nsis</module>
+        <module>osgi</module>
+        <module>plsql</module>
+        <module>pmd</module>
+        <module>pom-builder</module>
+        <module>project-config</module>
+        <module>python</module>
+        <module>python-virtualenv</module>
+        <module>release-note</module>
+        <module>robotframework</module>
+        <module>sass</module>
+        <module>schematron</module>
+        <module>site</module>
+        <module>spring</module>
+        <module>sql</module>
+        <module>struts1</module>
+        <module>struts2</module>
+        <module>surefire</module>
+        <module>taglist</module>
+        <module>tld</module>
+        <module>tomcat</module>
+        <module>toolchains</module>
+        <module>verbose</module>
+        <module>verifier</module>
+        <module>war</module>
+        <module>wro</module>
+        <module>xhtml</module>
+        <module>xml</module>
+        <module>xmlbeans</module>
+        <module>xsl</module>
+        <module>xslt</module>
+        <module></module>
     </modules>
 
 </project>

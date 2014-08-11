@@ -86,6 +86,12 @@
     <modules>
         <module>vcsignore</module>
         <module>upstream-wrapper</module>
+        <module>bom</module>
+        <module>c3p0</module>
+        <module>java</module>
+        <module>maven-archetype</module>
+        <module>project-aggregator</module>
+        <module>webjar</module>
     </modules>
 
 </project>
